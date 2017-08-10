@@ -59,9 +59,11 @@ screen.wgtd.corP01 <- function(..., minPvalue = 0.01){
     screen.wgtd.corP(..., minPvalue = minPvalue)
 }
 
+library(SuperLearner)
 sl = SuperLearner(Y, X, family = gaussian(), cvControl = list(V = 2),
                   obsWeights = obsWeights,
-                  SL.library = list(c("SL.glm", "All"), c("SL.glm.interaction", "screen.wgtd.corP01")))
+                  SL.library = list(c("SL.glm", "All"),
+                                    c("SL.glm.interaction", "screen.wgtd.corP01")))
 sl
 sl$whichScreen
 }

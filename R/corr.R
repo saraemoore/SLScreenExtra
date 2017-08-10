@@ -38,9 +38,11 @@
 #'     screen.wgtd.corRank(..., minscreen = minscreen)
 #' }
 #'
+#' library(SuperLearner)
 #' sl = SuperLearner(Y, X, family = gaussian(), cvControl = list(V = 2),
 #'                   obsWeights = obsWeights,
-#'                   SL.library = list(c("SL.glm", "All"), c("SL.glm.interaction", "screen.wgtd.corRank3")))
+#'                   SL.library = list(c("SL.glm", "All"),
+#'                                     c("SL.glm.interaction", "screen.wgtd.corRank3")))
 #' sl
 #' sl$whichScreen
 screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson", minscreen = 2, ...) {
@@ -100,9 +102,11 @@ screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson"
 #'     screen.wgtd.corP(..., minPvalue = minPvalue)
 #' }
 #'
+#' library(SuperLearner)
 #' sl = SuperLearner(Y, X, family = gaussian(), cvControl = list(V = 2),
 #'                   obsWeights = obsWeights,
-#'                   SL.library = list(c("SL.glm", "All"), c("SL.glm.interaction", "screen.wgtd.corP01")))
+#'                   SL.library = list(c("SL.glm", "All"),
+#'                                     c("SL.glm.interaction", "screen.wgtd.corP01")))
 #' sl
 #' sl$whichScreen
 screen.wgtd.corP <- function(Y, X, family, obsWeights, id, method = "pearson", minPvalue = 0.1, minscreen = 2, ...) {

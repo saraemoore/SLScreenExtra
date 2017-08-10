@@ -54,9 +54,11 @@ screen.wgtd.corRank3 <- function(..., minscreen = 3){
     screen.wgtd.corRank(..., minscreen = minscreen)
 }
 
+library(SuperLearner)
 sl = SuperLearner(Y, X, family = gaussian(), cvControl = list(V = 2),
                   obsWeights = obsWeights,
-                  SL.library = list(c("SL.glm", "All"), c("SL.glm.interaction", "screen.wgtd.corRank3")))
+                  SL.library = list(c("SL.glm", "All"),
+                                    c("SL.glm.interaction", "screen.wgtd.corRank3")))
 sl
 sl$whichScreen
 }
