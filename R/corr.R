@@ -1,0 +1,80 @@
+#' Weighted correlation screening algorithm
+#'
+#' Performs feature selection according to the ranking of weighted
+#' correlation coefficient estimates.
+#'
+#' @param Y Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}
+#' for specifics.
+#' @param X Predictor variable(s) (data.frame or matrix). See
+#' \code{\link[SuperLearner]{SuperLearner}} for specifics.
+#' @param family Error distribution to be used in the model: \code{"gaussian"}
+#' or \code{"binomial"}.  See \code{\link[SuperLearner]{SuperLearner}} for
+#' specifics.
+#' @param obsWeights Optional numeric vector of observation weights. See
+#' \code{\link[SuperLearner]{SuperLearner}} for specifics.
+#' @param id Cluster identification variable. Currently unused.
+#' @param method Which correlation coefficient to compute. Currently accepts
+#' \code{"pearson"} or \code{"spearman"}.
+#' @param minscreen Minimum number of features to select (aka rank). Only used
+#' if less than this number of features are selected using \code{minPvalue}.
+#' @param ... Currently unused.
+#' @return A logical vector with length equal to \code{ncol(X)}
+#' @export
+#' @importFrom wCorr weightedCorr
+#' @importFrom stats var
+screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson", minscreen = 2, ...) {
+    if(!method%in%c("pearson", "spearman")) {
+        stop("Correlation method ", method, " not supported by screen.wgtd.corRank")
+    }
+    listCor <- apply(X, 2, function(x, Y, method, obsWeights) {
+    	# if x is homogenous, bump it to the bottom of the list
+        ifelse(var(x) <= 0, 0, wCorr::weightedCorr(x, Y, method = method, weights = obsWeights))
+    }, Y = Y, method = method, obsWeights = obsWeights)
+
+    whichVariable <- (rank(-abs(listCor)) <= minscreen)
+    return(whichVariable)
+}
+
+#' Weighted correlation screening algorithm
+#'
+#' Performs feature selection according to the ranking of P-values
+#' returned from weighted correlations.
+#'
+#' @param Y Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}
+#' for specifics.
+#' @param X Predictor variable(s) (data.frame or matrix). See
+#' \code{\link[SuperLearner]{SuperLearner}} for specifics.
+#' @param family Error distribution to be used in the model: \code{"gaussian"}
+#' or \code{"binomial"}.  See \code{\link[SuperLearner]{SuperLearner}} for
+#' specifics.
+#' @param obsWeights Optional numeric vector of observation weights. See
+#' \code{\link[SuperLearner]{SuperLearner}} for specifics.
+#' @param id Cluster identification variable. Currently unused.
+#' @param method Which correlation coefficient to compute. Currently only
+#' accepts \code{"pearson"}.
+#' @param minPvalue To pass the screen, resulting P-values must not exceed this
+#' number.
+#' @param minscreen Minimum number of features to select (aka rank). Only used
+#' if less than this number of features are selected using \code{minPvalue}.
+#' @param ... Passed to \code{\link[weights]{wtd.cor}}. These arguments control
+#' bootstrapping of P-values and standard errors as well as forced scaling of
+#' weights.
+#' @return A logical vector with length equal to \code{ncol(X)}
+#' @export
+#' @importFrom weights wtd.cor
+#' @importFrom stats var
+screen.wgtd.corP <- function(Y, X, family, obsWeights, id, method = "pearson", minPvalue = 0.1, minscreen = 2, ...) {
+	if(!method=="pearson") {
+        stop("Correlation method ", method, " not supported by screen.wgtd.corRank")
+    }
+	listP <- apply(X, 2, function(x, Y, method) {
+    	# if x is homogeneous, bump it to the bottom of the list
+		ifelse(var(x) <= 0, 1, weights::wtd.cor(x, y = Y, weight = obsWeights, ...)[, "p.value"])
+	}, Y = Y, obsWeights = obsWeights)
+	whichVariable <- (listP <= minPvalue)
+	if (sum(whichVariable) < minscreen) {
+	  warning('number of variables with p value less than minPvalue is less than minscreen')
+		whichVariable[rank(listP) <= minscreen] <- TRUE
+	}
+	return(whichVariable)
+}
