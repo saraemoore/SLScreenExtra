@@ -7,9 +7,10 @@
 #' for specifics.
 #' @param X Predictor variable(s) (data.frame or matrix). See
 #' \code{\link[SuperLearner]{SuperLearner}} for specifics.
-#' @param family Error distribution to be used in the model: \code{"gaussian"}
-#' or \code{"binomial"}.  See \code{\link[SuperLearner]{SuperLearner}} for
-#' specifics.
+#' @param family Error distribution to be used in the model:
+#' \code{\link[stats]{gaussian}} or \code{\link[stats]{binomial}}.
+#' Currently unused. See \code{\link[SuperLearner]{SuperLearner}}
+#' for specifics.
 #' @param obsWeights Optional numeric vector of observation weights. See
 #' \code{\link[SuperLearner]{SuperLearner}} for specifics.
 #' @param id Cluster identification variable. Currently unused.
@@ -31,7 +32,7 @@
 #' X <- data.frame(X)
 #' Y <- X[, 1] + sqrt(abs(X[, 2] * X[, 3])) + X[, 2] - X[, 3] + rnorm(n)
 #' obsWeights <- 1/runif(n)
-#' screen.wgtd.corRank(Y, X, "gaussian", obsWeights, seq(n), minscreen = 3)
+#' screen.wgtd.corRank(Y, X, gaussian(), obsWeights, seq(n), minscreen = 3)
 screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson", minscreen = 2, ...) {
     if(!method%in%c("pearson", "spearman")) {
         stop("Correlation method ", method, " not supported by screen.wgtd.corRank")
@@ -54,8 +55,9 @@ screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson"
 #' for specifics.
 #' @param X Predictor variable(s) (data.frame or matrix). See
 #' \code{\link[SuperLearner]{SuperLearner}} for specifics.
-#' @param family Error distribution to be used in the model: \code{"gaussian"}
-#' or \code{"binomial"}.  See \code{\link[SuperLearner]{SuperLearner}} for
+#' @param family Error distribution to be used in the model:
+#' \code{\link[stats]{gaussian}} or \code{\link[stats]{binomial}}.
+#' Currently unused. See \code{\link[SuperLearner]{SuperLearner}} for
 #' specifics.
 #' @param obsWeights Optional numeric vector of observation weights. See
 #' \code{\link[SuperLearner]{SuperLearner}} for specifics.
@@ -82,7 +84,7 @@ screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson"
 #' X <- data.frame(X)
 #' Y <- X[, 1] + sqrt(abs(X[, 2] * X[, 3])) + X[, 2] - X[, 3] + rnorm(n)
 #' obsWeights <- 1/runif(n)
-#' screen.wgtd.corP(Y, X, "gaussian", obsWeights, seq(n), minPvalue = 0.000001)
+#' screen.wgtd.corP(Y, X, gaussian(), obsWeights, seq(n), minPvalue = 0.000001)
 screen.wgtd.corP <- function(Y, X, family, obsWeights, id, method = "pearson", minPvalue = 0.1, minscreen = 2, ...) {
 	if(method!="pearson") {
         stop("Correlation method ", method, " not supported by screen.wgtd.corRank")

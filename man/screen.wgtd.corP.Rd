@@ -14,8 +14,9 @@ for specifics.}
 \item{X}{Predictor variable(s) (data.frame or matrix). See
 \code{\link[SuperLearner]{SuperLearner}} for specifics.}
 
-\item{family}{Error distribution to be used in the model: \code{"gaussian"}
-or \code{"binomial"}.  See \code{\link[SuperLearner]{SuperLearner}} for
+\item{family}{Error distribution to be used in the model:
+\code{\link[stats]{gaussian}} or \code{\link[stats]{binomial}}.
+Currently unused. See \code{\link[SuperLearner]{SuperLearner}} for
 specifics.}
 
 \item{obsWeights}{Optional numeric vector of observation weights. See
@@ -52,5 +53,5 @@ X <- matrix(rnorm(n*p), nrow = n, ncol = p)
 X <- data.frame(X)
 Y <- X[, 1] + sqrt(abs(X[, 2] * X[, 3])) + X[, 2] - X[, 3] + rnorm(n)
 obsWeights <- 1/runif(n)
-screen.wgtd.corP(Y, X, "gaussian", obsWeights, seq(n), minPvalue = 0.000001)
+screen.wgtd.corP(Y, X, gaussian(), obsWeights, seq(n), minPvalue = 0.000001)
 }

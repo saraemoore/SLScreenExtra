@@ -14,9 +14,9 @@ for specifics.}
 \item{X}{Predictor variable(s) (data.frame or matrix). See
 \code{\link[SuperLearner]{SuperLearner}} for specifics.}
 
-\item{family}{Error distribution to be used in the model: \code{"gaussian"}
-or \code{"binomial"}.  See \code{\link[SuperLearner]{SuperLearner}} for
-specifics.}
+\item{family}{Error distribution to be used in the model:
+\code{\link[stats]{gaussian}} or \code{\link[stats]{binomial}}.
+See \code{\link[SuperLearner]{SuperLearner}} for specifics.}
 
 \item{obsWeights}{Optional numeric vector of observation weights. See
 \code{\link[SuperLearner]{SuperLearner}} for specifics.}

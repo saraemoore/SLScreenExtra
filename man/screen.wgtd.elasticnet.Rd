@@ -3,15 +3,12 @@
 \name{screen.wgtd.elasticnet}
 \alias{screen.wgtd.elasticnet}
 \alias{screen.wgtd.lasso}
-\alias{screen.wgtd.ridge}
 \title{Weighted regularized regression screening algorithm}
 \usage{
 screen.wgtd.elasticnet(Y, X, family, obsWeights, id, alpha = 0.5,
   minscreen = 2, nfolds = 10, nlambda = 100, ...)
 
 screen.wgtd.lasso(Y, X, family, obsWeights, id, ...)
-
-screen.wgtd.ridge(Y, X, family, obsWeights, id, ...)
 }
 \arguments{
 \item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}
@@ -20,9 +17,9 @@ for specifics.}
 \item{X}{Predictor variable(s) (data.frame or matrix). See
 \code{\link[SuperLearner]{SuperLearner}} for specifics.}
 
-\item{family}{Error distribution to be used in the model: \code{"gaussian"}
-or \code{"binomial"}.  See \code{\link[SuperLearner]{SuperLearner}} for
-specifics.}
+\item{family}{Error distribution to be used in the model:
+\code{\link[stats]{gaussian}} or \code{\link[stats]{binomial}}.
+See \code{\link[SuperLearner]{SuperLearner}} for specifics.}
 
 \item{obsWeights}{Optional numeric vector of observation weights. See
 \code{\link[SuperLearner]{SuperLearner}} for specifics.}
@@ -51,4 +48,16 @@ A logical vector with length equal to \code{ncol(X)}
 }
 \description{
 Performs feature selection via \code{\link[glmnet]{cv.glmnet}}.
+}
+\examples{
+# based on example in SuperLearner package
+set.seed(1)
+n <- 100
+p <- 20
+X <- matrix(rnorm(n*p), nrow = n, ncol = p)
+X <- data.frame(X)
+Y <- X[, 1] + sqrt(abs(X[, 2] * X[, 3])) + X[, 2] - X[, 3] + rnorm(n)
+obsWeights <- 1/runif(n)
+screen.wgtd.elasticnet(Y, X, gaussian(), obsWeights, seq(n), minscreen = 3)
+screen.wgtd.lasso(Y, X, gaussian(), obsWeights, seq(n), minscreen = 3)
 }

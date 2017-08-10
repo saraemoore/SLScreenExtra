@@ -6,9 +6,9 @@
 #' for specifics.
 #' @param X Predictor variable(s) (data.frame or matrix). See
 #' \code{\link[SuperLearner]{SuperLearner}} for specifics.
-#' @param family Error distribution to be used in the model: \code{"gaussian"}
-#' or \code{"binomial"}.  See \code{\link[SuperLearner]{SuperLearner}} for
-#' specifics.
+#' @param family Error distribution to be used in the model:
+#' \code{\link[stats]{gaussian}} or \code{\link[stats]{binomial}}.
+#' See \code{\link[SuperLearner]{SuperLearner}} for specifics.
 #' @param obsWeights Optional numeric vector of observation weights. See
 #' \code{\link[SuperLearner]{SuperLearner}} for specifics.
 #' @param id Cluster identification variable. Currently unused.
@@ -28,6 +28,17 @@
 #' @export
 #' @importFrom glmnet cv.glmnet coef.glmnet
 #' @importFrom stats coef model.matrix
+#' @examples
+#' # based on example in SuperLearner package
+#' set.seed(1)
+#' n <- 100
+#' p <- 20
+#' X <- matrix(rnorm(n*p), nrow = n, ncol = p)
+#' X <- data.frame(X)
+#' Y <- X[, 1] + sqrt(abs(X[, 2] * X[, 3])) + X[, 2] - X[, 3] + rnorm(n)
+#' obsWeights <- 1/runif(n)
+#' screen.wgtd.elasticnet(Y, X, gaussian(), obsWeights, seq(n), minscreen = 3)
+#' screen.wgtd.lasso(Y, X, gaussian(), obsWeights, seq(n), minscreen = 3)
 screen.wgtd.elasticnet <- function (Y, X, family, obsWeights, id, alpha = 0.5, minscreen = 2, nfolds = 10, nlambda = 100, ...) {
     if (!is.matrix(X)) {
         X <- model.matrix(~-1 + ., X)
@@ -51,10 +62,4 @@ screen.wgtd.elasticnet <- function (Y, X, family, obsWeights, id, alpha = 0.5, m
 #' @export
 screen.wgtd.lasso <- function (Y, X, family, obsWeights, id, ...) {
     screen.wgtd.elasticnet(Y, X, family, obsWeights, id, alpha = 1, ...)
-}
-
-#' @rdname screen.wgtd.elasticnet
-#' @export
-screen.wgtd.ridge <- function (Y, X, family, obsWeights, id, ...) {
-    screen.wgtd.elasticnet(Y, X, family, obsWeights, id, alpha = 0, ...)
 }

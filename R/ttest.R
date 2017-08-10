@@ -7,9 +7,9 @@
 #' for specifics.
 #' @param X Predictor variable(s) (data.frame or matrix). See
 #' \code{\link[SuperLearner]{SuperLearner}} for specifics.
-#' @param family Error distribution to be used in the model: \code{"gaussian"}
-#' or \code{"binomial"}.  See \code{\link[SuperLearner]{SuperLearner}} for
-#' specifics.
+#' @param family Error distribution to be used in the model:
+#' \code{\link[stats]{gaussian}} or \code{\link[stats]{binomial}}.
+#' See \code{\link[SuperLearner]{SuperLearner}} for specifics.
 #' @param obsWeights Optional numeric vector of observation weights. See
 #' \code{\link[SuperLearner]{SuperLearner}} for specifics.
 #' @param id Cluster identification variable. Currently unused.
@@ -53,9 +53,9 @@ screen.wgtd.ttestRank <- function(Y, X, family, obsWeights, id, minscreen = 2, .
 #' for specifics.
 #' @param X Predictor variable(s) (data.frame or matrix). See
 #' \code{\link[SuperLearner]{SuperLearner}} for specifics.
-#' @param family Error distribution to be used in the model: \code{"gaussian"}
-#' or \code{"binomial"}.  See \code{\link[SuperLearner]{SuperLearner}} for
-#' specifics.
+#' @param family Error distribution to be used in the model:
+#' \code{\link[stats]{gaussian}} or \code{\link[stats]{binomial}}.
+#' See \code{\link[SuperLearner]{SuperLearner}} for specifics.
 #' @param obsWeights Optional numeric vector of observation weights. See
 #' \code{\link[SuperLearner]{SuperLearner}} for specifics.
 #' @param id Cluster identification variable. Currently unused.
