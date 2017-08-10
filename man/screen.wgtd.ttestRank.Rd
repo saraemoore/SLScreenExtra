@@ -36,3 +36,14 @@ A logical vector with length equal to \code{ncol(X)}
 Performs feature selection according to the ranking of t statistics
 returned from weighted t-tests.
 }
+\examples{
+# based on example in SuperLearner package
+set.seed(1)
+n <- 100
+p <- 20
+X <- matrix(rnorm(n*p), nrow = n, ncol = p)
+X <- data.frame(X)
+Y <- rbinom(n, 1, plogis(.2*X[, 1] + .1*X[, 2] - .2*X[, 3] + .1*X[, 3]*X[, 4] - .2*abs(X[, 4])))
+obsWeights <- 1/runif(n)
+screen.wgtd.ttestRank(Y, X, binomial(), obsWeights, seq(n), minscreen = 4)
+}
