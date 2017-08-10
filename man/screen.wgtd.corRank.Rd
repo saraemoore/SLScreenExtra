@@ -38,3 +38,14 @@ A logical vector with length equal to \code{ncol(X)}
 Performs feature selection according to the ranking of weighted
 correlation coefficient estimates.
 }
+\examples{
+# based on example in SuperLearner package
+set.seed(1)
+n <- 100
+p <- 20
+X <- matrix(rnorm(n*p), nrow = n, ncol = p)
+X <- data.frame(X)
+Y <- X[, 1] + sqrt(abs(X[, 2] * X[, 3])) + X[, 2] - X[, 3] + rnorm(n)
+obsWeights <- 1/runif(n)
+screen.wgtd.corRank(Y, X, "gaussian", obsWeights, seq(n), minscreen = 3)
+}

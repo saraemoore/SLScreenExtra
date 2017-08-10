@@ -22,6 +22,16 @@
 #' @export
 #' @importFrom wCorr weightedCorr
 #' @importFrom stats var
+#' @examples
+#' # based on example in SuperLearner package
+#' set.seed(1)
+#' n <- 100
+#' p <- 20
+#' X <- matrix(rnorm(n*p), nrow = n, ncol = p)
+#' X <- data.frame(X)
+#' Y <- X[, 1] + sqrt(abs(X[, 2] * X[, 3])) + X[, 2] - X[, 3] + rnorm(n)
+#' obsWeights <- 1/runif(n)
+#' screen.wgtd.corRank(Y, X, "gaussian", obsWeights, seq(n), minscreen = 3)
 screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson", minscreen = 2, ...) {
     if(!method%in%c("pearson", "spearman")) {
         stop("Correlation method ", method, " not supported by screen.wgtd.corRank")
@@ -63,11 +73,21 @@ screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson"
 #' @export
 #' @importFrom weights wtd.cor
 #' @importFrom stats var
+#' @examples
+#' # based on example in SuperLearner package
+#' set.seed(1)
+#' n <- 100
+#' p <- 20
+#' X <- matrix(rnorm(n*p), nrow = n, ncol = p)
+#' X <- data.frame(X)
+#' Y <- X[, 1] + sqrt(abs(X[, 2] * X[, 3])) + X[, 2] - X[, 3] + rnorm(n)
+#' obsWeights <- 1/runif(n)
+#' screen.wgtd.corP(Y, X, "gaussian", obsWeights, seq(n), minPvalue = 0.000001)
 screen.wgtd.corP <- function(Y, X, family, obsWeights, id, method = "pearson", minPvalue = 0.1, minscreen = 2, ...) {
-	if(!method=="pearson") {
+	if(method!="pearson") {
         stop("Correlation method ", method, " not supported by screen.wgtd.corRank")
     }
-	listP <- apply(X, 2, function(x, Y, method) {
+	listP <- apply(X, 2, function(x, Y, obsWeights) {
     	# if x is homogeneous, bump it to the bottom of the list
 		ifelse(var(x) <= 0, 1, weights::wtd.cor(x, y = Y, weight = obsWeights, ...)[, "p.value"])
 	}, Y = Y, obsWeights = obsWeights)
