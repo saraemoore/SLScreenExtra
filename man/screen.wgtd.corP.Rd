@@ -54,4 +54,14 @@ X <- data.frame(X)
 Y <- X[, 1] + sqrt(abs(X[, 2] * X[, 3])) + X[, 2] - X[, 3] + rnorm(n)
 obsWeights <- 1/runif(n)
 screen.wgtd.corP(Y, X, gaussian(), obsWeights, seq(n), minPvalue = 0.000001)
+
+screen.wgtd.corP01 <- function(..., minPvalue = 0.01){
+    screen.wgtd.corP(..., minPvalue = minPvalue)
+}
+
+sl = SuperLearner(Y, X, family = gaussian(), cvControl = list(V = 2),
+                  obsWeights = obsWeights,
+                  SL.library = list(c("SL.glm", "All"), c("SL.glm.interaction", "screen.wgtd.corP01")))
+sl
+sl$whichScreen
 }

@@ -24,7 +24,7 @@
 #' @importFrom wCorr weightedCorr
 #' @importFrom stats var
 #' @examples
-#' # based on example in SuperLearner package
+#' # based on examples in SuperLearner package
 #' set.seed(1)
 #' n <- 100
 #' p <- 20
@@ -33,6 +33,16 @@
 #' Y <- X[, 1] + sqrt(abs(X[, 2] * X[, 3])) + X[, 2] - X[, 3] + rnorm(n)
 #' obsWeights <- 1/runif(n)
 #' screen.wgtd.corRank(Y, X, gaussian(), obsWeights, seq(n), minscreen = 3)
+#'
+#' screen.wgtd.corRank3 <- function(..., minscreen = 3){
+#'     screen.wgtd.corRank(..., minscreen = minscreen)
+#' }
+#'
+#' sl = SuperLearner(Y, X, family = gaussian(), cvControl = list(V = 2),
+#'                   obsWeights = obsWeights,
+#'                   SL.library = list(c("SL.glm", "All"), c("SL.glm.interaction", "screen.wgtd.corRank3")))
+#' sl
+#' sl$whichScreen
 screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson", minscreen = 2, ...) {
     if(!method%in%c("pearson", "spearman")) {
         stop("Correlation method ", method, " not supported by screen.wgtd.corRank")
@@ -85,6 +95,16 @@ screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson"
 #' Y <- X[, 1] + sqrt(abs(X[, 2] * X[, 3])) + X[, 2] - X[, 3] + rnorm(n)
 #' obsWeights <- 1/runif(n)
 #' screen.wgtd.corP(Y, X, gaussian(), obsWeights, seq(n), minPvalue = 0.000001)
+#'
+#' screen.wgtd.corP01 <- function(..., minPvalue = 0.01){
+#'     screen.wgtd.corP(..., minPvalue = minPvalue)
+#' }
+#'
+#' sl = SuperLearner(Y, X, family = gaussian(), cvControl = list(V = 2),
+#'                   obsWeights = obsWeights,
+#'                   SL.library = list(c("SL.glm", "All"), c("SL.glm.interaction", "screen.wgtd.corP01")))
+#' sl
+#' sl$whichScreen
 screen.wgtd.corP <- function(Y, X, family, obsWeights, id, method = "pearson", minPvalue = 0.1, minscreen = 2, ...) {
 	if(method!="pearson") {
         stop("Correlation method ", method, " not supported by screen.wgtd.corRank")
