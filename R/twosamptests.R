@@ -1,7 +1,8 @@
 #' Weighted t-test screening algorithm
 #'
 #' Performs feature selection according to the ranking of t statistics
-#' returned from weighted t-tests.
+#' returned from weighted t-tests. Implemented via
+#' \code{\link[weights]{wtd.t.test}}.
 #'
 #' @param Y Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}
 #' for specifics.
@@ -57,7 +58,8 @@ screen.wgtd.ttestRank <- function(Y, X, family, obsWeights, id, minscreen = 2, .
 #' Weighted t-test screening algorithm
 #'
 #' Performs feature selection according to the ranking of P-values
-#' returned from weighted t-tests.
+#' returned from weighted t-tests. Implemented via
+#' \code{\link[weights]{wtd.t.test}}.
 #'
 #' @param Y Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}
 #' for specifics.

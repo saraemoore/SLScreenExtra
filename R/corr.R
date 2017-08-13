@@ -1,7 +1,8 @@
 #' Weighted correlation screening algorithm
 #'
 #' Performs feature selection according to the ranking of weighted
-#' correlation coefficient estimates.
+#' correlation coefficient estimates. Implemented via
+#' \code{\link[wCorr]{weightedCorr}}.
 #'
 #' @param Y Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}
 #' for specifics.
@@ -61,7 +62,8 @@ screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson"
 #' Weighted correlation screening algorithm
 #'
 #' Performs feature selection according to the ranking of P-values
-#' returned from weighted correlations.
+#' returned from weighted correlations. Implemented via
+#' \code{\link[weights]{wtd.cor}}.
 #'
 #' @param Y Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}
 #' for specifics.

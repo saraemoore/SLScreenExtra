@@ -42,7 +42,8 @@ A logical vector with length equal to \code{ncol(X)}
 }
 \description{
 Performs feature selection according to the ranking of P-values
-returned from weighted correlations.
+returned from weighted correlations. Implemented via
+\code{\link[weights]{wtd.cor}}.
 }
 \examples{
 # based on example in SuperLearner package

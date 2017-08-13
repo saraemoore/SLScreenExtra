@@ -37,7 +37,8 @@ A logical vector with length equal to \code{ncol(X)}
 }
 \description{
 Performs feature selection according to the ranking of weighted
-correlation coefficient estimates.
+correlation coefficient estimates. Implemented via
+\code{\link[wCorr]{weightedCorr}}.
 }
 \examples{
 # based on examples in SuperLearner package
