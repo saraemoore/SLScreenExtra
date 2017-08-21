@@ -1,10 +1,10 @@
-#' SLWeightedScreen: A collection of observation weight-respecting screening algorithms for SuperLearner
+#' SLScreenExtra: A collection of screening algorithms for SuperLearner
 #'
-#' The SLWeightedScreen package provides feature selection or 'screen' functions
-#' that plug into the R package for the ensemble learner
-#' \code{\link[SuperLearner]{SuperLearner}}. Specifically, the screening
-#' algorithms in this package utilize observation weights
-#' (\code{obsWeights}) in their calculations.
+#' The SLScreenExtra package provides feature selection or \code{screen.*()}
+#' functions that plug into the R package for the ensemble learner
+#' \code{\link[SuperLearner]{SuperLearner}}. Some of the screening
+#' algorithms (\code{screen.wgtd.*()}) in this package utilize observation
+#' weights (\code{obsWeights}) in their calculations.
 #'
 #' @section Filter methods:
 #'
@@ -30,5 +30,5 @@
 #'
 #'
 #' @docType package
-#' @name SLWeightedScreen
+#' @name SLScreenExtra
 NULL
