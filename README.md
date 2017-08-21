@@ -1,4 +1,4 @@
-[![Travis-CI Build Status](https://travis-ci.org/saraemoore/SLWeightedScreen.svg?branch=master)](https://travis-ci.org/saraemoore/SLWeightedScreen)
+[![Travis-CI Build Status](https://travis-ci.org/saraemoore/SLScreenExtra.svg?branch=master)](https://travis-ci.org/saraemoore/SLScreenExtra)
 
-# SLWeightedScreen
-A collection of observation weight-respecting screening algorithms for SuperLearner
+# SLScreenExtra
+A collection of additional feature selection (`screen.*()`) algorithms for [SuperLearner](https://github.com/ecpolley/SuperLearner).

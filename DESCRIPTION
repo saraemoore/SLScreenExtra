@@ -1,19 +1,20 @@
-Package: SLWeightedScreen
-Title: A Collection of Observation Weight-Respecting Screening Algorithms for SuperLearner
-Version: 0.1.4
-Date: 2017-08-09
+Package: SLScreenExtra
+Title: A Collection of Additional Feature Selection ('screen.*()') Algorithms for SuperLearner
+Version: 0.2
+Date: 2017-08-21
 Authors@R: person("Sara", "Moore", email = "sara@saraemoore.com",
                   role = c("aut", "cre"))
-Description: This package contains several variable selection
-    algorithm "wrappers" in the format expected by the ensemble
-    learning R package SuperLearner. These screening algorithms
-    are designed to respect observation weights (obsWeights).
+Description: This package contains several variable selection algorithm
+	"wrappers" in the format expected by the ensemble learning R package
+	SuperLearner. Included in this collection are screening algorithms
+	designed to respect observation weights (obsWeights).
 Depends:
     R (>= 2.14.0)
 Imports:
     glmnet,
     wCorr,
-    weights
+    weights,
+    FSelector
 Suggests:
     SuperLearner
 License: GPL-3
