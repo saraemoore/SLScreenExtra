@@ -47,4 +47,16 @@ X <- data.frame(X)
 Y <- rbinom(n, 1, plogis(.2*X[, 1] + .1*X[, 2] - .2*X[, 3] + .1*X[, 3]*X[, 4] - .2*abs(X[, 4])))
 obsWeights <- 1/runif(n)
 screen.wgtd.ttestRank(Y, X, binomial(), obsWeights, seq(n), minscreen = 4)
+
+screen.wgtd.ttestRank4 <- function(..., minscreen = 4){
+    screen.wgtd.ttestRank(..., minscreen = minscreen)
+}
+
+library(SuperLearner)
+sl = SuperLearner(Y, X, family = binomial(), cvControl = list(V = 2),
+                  obsWeights = obsWeights,
+                  SL.library = list(c("SL.lm", "All"),
+                                    c("SL.lm", "screen.wgtd.ttestRank4")))
+sl
+sl$whichScreen
 }

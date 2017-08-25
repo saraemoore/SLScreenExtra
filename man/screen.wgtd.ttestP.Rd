@@ -51,4 +51,16 @@ X <- data.frame(X)
 Y <- rbinom(n, 1, plogis(.2*X[, 1] + .1*X[, 2] - .2*X[, 3] + .1*X[, 3]*X[, 4] - .2*abs(X[, 4])))
 obsWeights <- 1/runif(n)
 screen.wgtd.ttestP(Y, X, binomial(), obsWeights, seq(n), minPvalue = 0.05)
+
+screen.wgtd.ttestP05 <- function(..., minPvalue = 0.05){
+    screen.wgtd.ttestP(..., minPvalue = minPvalue)
+}
+
+library(SuperLearner)
+sl = SuperLearner(Y, X, family = binomial(), cvControl = list(V = 2),
+                  obsWeights = obsWeights,
+                  SL.library = list(c("SL.lm", "All"),
+                                    c("SL.lm", "screen.wgtd.ttestP05")))
+sl
+sl$whichScreen
 }
