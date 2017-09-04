@@ -5,7 +5,7 @@
 \title{Weighted correlation screening algorithm}
 \usage{
 screen.wgtd.corP(Y, X, family, obsWeights, id, method = "pearson",
-  minPvalue = 0.1, minscreen = 2, ...)
+  minPvalue = 0.1, k = 2, ...)
 }
 \arguments{
 \item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}
@@ -16,8 +16,8 @@ for specifics.}
 
 \item{family}{Error distribution to be used in the model:
 \code{\link[stats]{gaussian}} or \code{\link[stats]{binomial}}.
-Currently unused. See \code{\link[SuperLearner]{SuperLearner}} for
-specifics.}
+Currently unused. See \code{\link[SuperLearner]{SuperLearner}}
+for specifics.}
 
 \item{obsWeights}{Optional numeric vector of observation weights. See
 \code{\link[SuperLearner]{SuperLearner}} for specifics.}
@@ -30,7 +30,7 @@ accepts \code{"pearson"}.}
 \item{minPvalue}{To pass the screen, resulting P-values must not exceed this
 number.}
 
-\item{minscreen}{Minimum number of features to select (aka rank). Only used
+\item{k}{Minimum number of features to select. Only used
 if less than this number of features are selected using \code{minPvalue}.}
 
 \item{...}{Passed to \code{\link[weights]{wtd.cor}}. These arguments control

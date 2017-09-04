@@ -17,8 +17,7 @@
 #' @param id Cluster identification variable. Currently unused.
 #' @param method Which correlation coefficient to compute. Currently accepts
 #' \code{"pearson"} or \code{"spearman"}.
-#' @param minscreen Minimum number of features to select (aka rank). Only used
-#' if less than this number of features are selected using \code{minPvalue}.
+#' @param k Minimum number of features to select.
 #' @param ... Currently unused.
 #' @return A logical vector with length equal to \code{ncol(X)}
 #' @export
@@ -33,10 +32,10 @@
 #' X <- data.frame(X)
 #' Y <- X[, 1] + sqrt(abs(X[, 2] * X[, 3])) + X[, 2] - X[, 3] + rnorm(n)
 #' obsWeights <- 1/runif(n)
-#' screen.wgtd.corRank(Y, X, gaussian(), obsWeights, seq(n), minscreen = 3)
+#' screen.wgtd.corRank(Y, X, gaussian(), obsWeights, seq(n), k = 3)
 #'
-#' screen.wgtd.corRank3 <- function(..., minscreen = 3){
-#'     screen.wgtd.corRank(..., minscreen = minscreen)
+#' screen.wgtd.corRank3 <- function(..., k = 3){
+#'     screen.wgtd.corRank(..., k = k)
 #' }
 #'
 #' library(SuperLearner)
@@ -46,7 +45,7 @@
 #'                                     c("SL.glm.interaction", "screen.wgtd.corRank3")))
 #' sl
 #' sl$whichScreen
-screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson", minscreen = 2, ...) {
+screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson", k = 2, ...) {
     if(!method%in%c("pearson", "spearman")) {
         stop("Correlation method ", method, " not supported by screen.wgtd.corRank")
     }
@@ -55,7 +54,7 @@ screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson"
         ifelse(var(x) <= 0, 0, wCorr::weightedCorr(x, Y, method = method, weights = obsWeights))
     }, Y = Y, method = method, obsWeights = obsWeights)
 
-    whichVariable <- (rank(-abs(listCor)) <= minscreen)
+    whichVariable <- (rank(-abs(listCor)) <= k)
     return(whichVariable)
 }
 
@@ -65,27 +64,17 @@ screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson"
 #' returned from weighted correlations. Implemented via
 #' \code{\link[weights]{wtd.cor}}.
 #'
-#' @param Y Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}
-#' for specifics.
-#' @param X Predictor variable(s) (data.frame or matrix). See
-#' \code{\link[SuperLearner]{SuperLearner}} for specifics.
-#' @param family Error distribution to be used in the model:
-#' \code{\link[stats]{gaussian}} or \code{\link[stats]{binomial}}.
-#' Currently unused. See \code{\link[SuperLearner]{SuperLearner}} for
-#' specifics.
-#' @param obsWeights Optional numeric vector of observation weights. See
-#' \code{\link[SuperLearner]{SuperLearner}} for specifics.
-#' @param id Cluster identification variable. Currently unused.
+#' @inheritParams screen.wgtd.corRank
 #' @param method Which correlation coefficient to compute. Currently only
 #' accepts \code{"pearson"}.
 #' @param minPvalue To pass the screen, resulting P-values must not exceed this
 #' number.
-#' @param minscreen Minimum number of features to select (aka rank). Only used
+#' @param k Minimum number of features to select. Only used
 #' if less than this number of features are selected using \code{minPvalue}.
 #' @param ... Passed to \code{\link[weights]{wtd.cor}}. These arguments control
 #' bootstrapping of P-values and standard errors as well as forced scaling of
 #' weights.
-#' @return A logical vector with length equal to \code{ncol(X)}
+#' @inherit screen.wgtd.corRank return
 #' @export
 #' @importFrom weights wtd.cor
 #' @importFrom stats var
@@ -111,7 +100,7 @@ screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson"
 #'                                     c("SL.glm.interaction", "screen.wgtd.corP01")))
 #' sl
 #' sl$whichScreen
-screen.wgtd.corP <- function(Y, X, family, obsWeights, id, method = "pearson", minPvalue = 0.1, minscreen = 2, ...) {
+screen.wgtd.corP <- function(Y, X, family, obsWeights, id, method = "pearson", minPvalue = 0.1, k = 2, ...) {
 	if(method!="pearson") {
         stop("Correlation method ", method, " not supported by screen.wgtd.corRank")
     }
@@ -120,9 +109,9 @@ screen.wgtd.corP <- function(Y, X, family, obsWeights, id, method = "pearson", m
 		ifelse(var(x) <= 0, 1, weights::wtd.cor(x, y = Y, weight = obsWeights, ...)[, "p.value"])
 	}, Y = Y, obsWeights = obsWeights)
 	whichVariable <- (listP <= minPvalue)
-	if (sum(whichVariable) < minscreen) {
-	  warning('number of variables with p value less than minPvalue is less than minscreen')
-		whichVariable[rank(listP) <= minscreen] <- TRUE
+	if (sum(whichVariable) < k) {
+	  warning('number of variables with p value less than minPvalue is less than k')
+		whichVariable[rank(listP) <= k] <- TRUE
 	}
 	return(whichVariable)
 }

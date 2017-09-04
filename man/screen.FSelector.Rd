@@ -4,10 +4,10 @@
 \alias{screen.FSelector}
 \title{Screening algorithms implemented in the FSelector package}
 \usage{
-screen.FSelector(Y, X, family, filter = c("cfs", "chi.squared", "consistency",
-  "gain.ratio", "information.gain", "linear.correlation", "oneR",
-  "random.forest.importance", "rank.correlation", "relief",
-  "symmetrical.uncertainty"), filter_params = NULL,
+screen.FSelector(Y, X, family, obsWeights, id, filter = c("cfs",
+  "chi.squared", "consistency", "gain.ratio", "information.gain",
+  "linear.correlation", "oneR", "random.forest.importance", "rank.correlation",
+  "relief", "symmetrical.uncertainty"), filter_params = NULL,
   selector = c("cutoff.biggest.diff", "cutoff.k", "cutoff.k.percent", "all"),
   k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)), cutoff.k.percent =
   0.5, NULL), verbose = FALSE, ...)
@@ -23,6 +23,11 @@ for specifics.}
 \code{\link[stats]{gaussian}} or \code{\link[stats]{binomial}}.
 Currently unused. See \code{\link[SuperLearner]{SuperLearner}}
 for specifics.}
+
+\item{obsWeights}{Optional numeric vector of observation weights. Currently
+unused.}
+
+\item{id}{Cluster identification variable. Currently unused.}
 
 \item{filter}{A string corresponding to a feature ranking or selecting function
 implemented in the FSelector package. One of: \code{\link[FSelector]{cfs}},

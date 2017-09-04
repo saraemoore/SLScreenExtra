@@ -9,25 +9,41 @@
 #' @section Filter methods:
 #'
 #' \itemize{
-#'  \item{Correlation:}{\itemize{
+#'   \item{Correlation:}{\itemize{
 #'  	\item{\code{\link{screen.wgtd.corP}}}
 #' 		\item{\code{\link{screen.wgtd.corRank}}}
-#' 	}}
-#'  \item{Comparison test:}{\itemize{
+#' 		\item{\code{\link{screen.FSelector.correlation}}}
+#' 	 }}
+#'   \item{Comparison test:}{\itemize{
+#' 		\item{\code{\link{screen.wgtd.ttest}}}
 #'  	\item{\code{\link{screen.wgtd.ttestP}}}
-#' 		\item{\code{\link{screen.wgtd.ttestRank}}}
-#' 	}}
+#'  	\item{\code{\link{screen.FSelector.chi.squared}}}
+#'  	\item{\code{\link{screen.FSelector.oneR}}}
+#' 	 }}
+#'   \item{\code{\link{screen.FSelector.entropy}}}
+#'   \item{\code{\link{screen.FSelector.relief}}}
 #' }
 #'
 #' @section Embedded methods:
 #'
 #' \itemize{
-#'  \item{Regularized/penalized regression:}{\itemize{
+#'   \item{Regularized/penalized regression:}{\itemize{
 #'  	\item{\code{\link{screen.wgtd.lasso}}}
 #' 		\item{\code{\link{screen.wgtd.elasticnet}}}
-#' 	}}
+#' 	 }}
+#'   \item{Random decision forests:}{\itemize{
+#'  	\item{\code{\link{screen.randomForest.imp}}}
+#' 		\item{\code{\link{screen.ranger}}}
+#' 		\item{\code{\link{screen.FSelector.random.forest.importance}}}
+#' 	 }}
 #' }
 #'
+#' @section Feature subset space search methods:
+#'
+#' \itemize{
+#'   \item{\code{\link{screen.FSelector.cfs}}}
+#'   \item{\code{\link{screen.FSelector.consistency}}}
+#' }
 #'
 #' @docType package
 #' @name SLScreenExtra

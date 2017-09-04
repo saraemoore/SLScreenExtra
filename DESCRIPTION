@@ -1,7 +1,7 @@
 Package: SLScreenExtra
 Title: A Collection of Additional Feature Selection ('screen.*()') Algorithms for SuperLearner
-Version: 0.2
-Date: 2017-08-21
+Version: 0.3.0
+Date: 2017-09-04
 Authors@R: person("Sara", "Moore", email = "sara@saraemoore.com",
                   role = c("aut", "cre"))
 Description: This package contains several variable selection algorithm
@@ -14,7 +14,12 @@ Imports:
     glmnet,
     wCorr,
     weights,
-    FSelector
+    FSelector,
+    randomForest,
+    ranger,
+    methods,
+    stats,
+    earth (>= 4.5.1)
 Suggests:
     SuperLearner
 License: GPL-3

@@ -4,8 +4,8 @@
 \alias{screen.wgtd.corRank}
 \title{Weighted correlation screening algorithm}
 \usage{
-screen.wgtd.corRank(Y, X, family, obsWeights, id, method = "pearson",
-  minscreen = 2, ...)
+screen.wgtd.corRank(Y, X, family, obsWeights, id, method = "pearson", k = 2,
+  ...)
 }
 \arguments{
 \item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}
@@ -27,8 +27,7 @@ for specifics.}
 \item{method}{Which correlation coefficient to compute. Currently accepts
 \code{"pearson"} or \code{"spearman"}.}
 
-\item{minscreen}{Minimum number of features to select (aka rank). Only used
-if less than this number of features are selected using \code{minPvalue}.}
+\item{k}{Minimum number of features to select.}
 
 \item{...}{Currently unused.}
 }
@@ -49,10 +48,10 @@ X <- matrix(rnorm(n*p), nrow = n, ncol = p)
 X <- data.frame(X)
 Y <- X[, 1] + sqrt(abs(X[, 2] * X[, 3])) + X[, 2] - X[, 3] + rnorm(n)
 obsWeights <- 1/runif(n)
-screen.wgtd.corRank(Y, X, gaussian(), obsWeights, seq(n), minscreen = 3)
+screen.wgtd.corRank(Y, X, gaussian(), obsWeights, seq(n), k = 3)
 
-screen.wgtd.corRank3 <- function(..., minscreen = 3){
-    screen.wgtd.corRank(..., minscreen = minscreen)
+screen.wgtd.corRank3 <- function(..., k = 3){
+    screen.wgtd.corRank(..., k = k)
 }
 
 library(SuperLearner)

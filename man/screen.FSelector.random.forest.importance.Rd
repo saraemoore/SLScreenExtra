@@ -5,7 +5,7 @@
 \title{Random Forest screening algorithm}
 \usage{
 screen.FSelector.random.forest.importance(Y, X, family,
-  importance.type = formals(random.forest.importance)$importance.type,
+  type = formals(random.forest.importance)$importance.type,
   selector = c("cutoff.biggest.diff", "cutoff.k", "cutoff.k.percent"),
   k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)), cutoff.k.percent =
   0.5, NULL), verbose = FALSE, ...)
@@ -22,7 +22,7 @@ for specifics.}
 Currently unused. See \code{\link[SuperLearner]{SuperLearner}}
 for specifics.}
 
-\item{importance.type}{Integer: \code{1}, indicating mean decrease in
+\item{type}{Importance type. Integer: \code{1}, indicating mean decrease in
 accuracy (for \code{binomial()} family) or percent increase in mean squared
 error (for \code{gaussian()} family) when comparing predictions using
 the original variable versus a permuted version of the variable (column of
@@ -68,7 +68,7 @@ screen.FSelector.random.forest.importance(Y, X, binomial(), selector = "cutoff.k
 data(mtcars)
 Y <- mtcars$mpg
 X <- mtcars[,-which(colnames(mtcars)=="mpg")]
-screen.FSelector.random.forest.importance(Y, X, gaussian(), importance.type = 2)
+screen.FSelector.random.forest.importance(Y, X, gaussian(), type = 2)
 
 # based on examples in SuperLearner package
 set.seed(1)

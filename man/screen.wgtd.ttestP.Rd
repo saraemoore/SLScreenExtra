@@ -4,41 +4,36 @@
 \alias{screen.wgtd.ttestP}
 \title{Weighted t-test screening algorithm}
 \usage{
-screen.wgtd.ttestP(Y, X, family, obsWeights, id, minPvalue = 0.1,
-  minscreen = 2, ...)
+screen.wgtd.ttestP(..., selector = "cutoff.k", k = 1, minP = 0.1)
 }
 \arguments{
-\item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}
-for specifics.}
-
-\item{X}{Predictor variable(s) (data.frame or matrix). See
-\code{\link[SuperLearner]{SuperLearner}} for specifics.}
-
-\item{family}{Error distribution to be used in the model:
-\code{\link[stats]{gaussian}} or \code{\link[stats]{binomial}}.
-See \code{\link[SuperLearner]{SuperLearner}} for specifics.}
-
-\item{obsWeights}{Optional numeric vector of observation weights. See
-\code{\link[SuperLearner]{SuperLearner}} for specifics.}
-
-\item{id}{Cluster identification variable. Currently unused.}
-
-\item{minPvalue}{To pass the screen, resulting P-values must not exceed this
-number.}
-
-\item{minscreen}{Minimum number of features to select (aka rank). Only used
-if less than this number of features are selected using \code{minPvalue}.}
-
 \item{...}{Passed to \code{\link[weights]{wtd.t.test}}. These arguments
 control bootstrapping of P-values and standard errors as well as forced
 scaling of weights.}
+
+\item{selector}{A string corresponding to a subset selecting function
+implemented in the FSelector package. One of:
+\code{\link[FSelector]{cutoff.k}} or \code{\link[FSelector]{cutoff.k.percent}}.
+Ignored if \code{minP} is non-\code{NULL} and at least \code{k} features
+have P-values at or below \code{minP}. Default: \code{"cutoff.k"}.}
+
+\item{k}{Numeric. Minimum number or proportion of features to select.
+Passed through to the \code{selector}. For \code{\link[FSelector]{cutoff.k}},
+this is an integer indicating the number of features to keep from \code{X}.
+For \code{\link[FSelector]{cutoff.k.percent}}, this is instead the proportion
+of features to keep. Default: \code{1}. Ignored if at least \code{k} features
+have P-values at or below \code{minP}.}
+
+\item{minP}{Numeric. To pass the screen, resulting P-values must not exceed
+this number. Default is \code{0.1}. Ignored if fewer than \code{k} features
+have P-values at or below this value.}
 }
 \value{
 A logical vector with length equal to \code{ncol(X)}
 }
 \description{
-Performs feature selection according to the ranking of P-values
-returned from weighted t-tests. Implemented via
+Convenience wrapper to perform feature selection according to the ranking of
+P-values returned from weighted t-tests. Implemented via
 \code{\link[weights]{wtd.t.test}}.
 }
 \examples{
@@ -50,10 +45,10 @@ X <- matrix(rnorm(n*p), nrow = n, ncol = p)
 X <- data.frame(X)
 Y <- rbinom(n, 1, plogis(.2*X[, 1] + .1*X[, 2] - .2*X[, 3] + .1*X[, 3]*X[, 4] - .2*abs(X[, 4])))
 obsWeights <- 1/runif(n)
-screen.wgtd.ttestP(Y, X, binomial(), obsWeights, seq(n), minPvalue = 0.05)
+screen.wgtd.ttestP(Y, X, binomial(), obsWeights, seq(n), minP = 0.05)
 
-screen.wgtd.ttestP05 <- function(..., minPvalue = 0.05){
-    screen.wgtd.ttestP(..., minPvalue = minPvalue)
+screen.wgtd.ttestP05 <- function(..., minP = 0.05){
+    screen.wgtd.ttestP(..., minP = minP)
 }
 
 library(SuperLearner)

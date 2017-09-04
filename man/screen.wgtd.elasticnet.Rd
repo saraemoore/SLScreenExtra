@@ -5,10 +5,10 @@
 \alias{screen.wgtd.lasso}
 \title{Weighted regularized regression screening algorithm}
 \usage{
-screen.wgtd.elasticnet(Y, X, family, obsWeights, id, alpha = 0.5,
-  minscreen = 2, nfolds = 10, nlambda = 100, ...)
+screen.wgtd.elasticnet(Y, X, family, obsWeights, id, alpha = 0.5, k = 2,
+  nfolds = 10, nlambda = 100, ...)
 
-screen.wgtd.lasso(Y, X, family, obsWeights, id, ...)
+screen.wgtd.lasso(..., alpha = 1)
 }
 \arguments{
 \item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}
@@ -28,11 +28,12 @@ See \code{\link[SuperLearner]{SuperLearner}} for specifics.}
 
 \item{alpha}{The elasticnet mixing parameter. Default for
 \code{screen.wgtd.elasticnet} is (arbitrarily) \code{0.5}. Forced to
-\code{1} for \code{screen.wgtd.lasso} and \code{0} for
-\code{screen.wgtd.ridge}. See \code{\link[glmnet]{glmnet}} for specifics.}
+\code{1} for \code{screen.wgtd.lasso}. See \code{\link[glmnet]{glmnet}} for
+specifics.}
 
-\item{minscreen}{Minimum number of features to select (aka rank). Only used
-if less than this number of features are selected using \code{minPvalue}.}
+\item{k}{Minimum number of features to select. Only used if fewer than this
+number of features are selected using the optimal \code{lambda} value chosen
+via cross-validation.}
 
 \item{nfolds}{Number of cross-validation folds to use when choosing optimal
 \code{lambda}. Default is \code{10}. See \code{\link[glmnet]{cv.glmnet}} for
@@ -58,6 +59,6 @@ X <- matrix(rnorm(n*p), nrow = n, ncol = p)
 X <- data.frame(X)
 Y <- X[, 1] + sqrt(abs(X[, 2] * X[, 3])) + X[, 2] - X[, 3] + rnorm(n)
 obsWeights <- 1/runif(n)
-screen.wgtd.elasticnet(Y, X, gaussian(), obsWeights, seq(n), minscreen = 3)
-screen.wgtd.lasso(Y, X, gaussian(), obsWeights, seq(n), minscreen = 3)
+screen.wgtd.elasticnet(Y, X, gaussian(), obsWeights, seq(n), k = 3)
+screen.wgtd.lasso(Y, X, gaussian(), obsWeights, seq(n), k = 3)
 }

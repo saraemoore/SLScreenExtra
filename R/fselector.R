@@ -11,6 +11,9 @@
 #' \code{\link[stats]{gaussian}} or \code{\link[stats]{binomial}}.
 #' Currently unused. See \code{\link[SuperLearner]{SuperLearner}}
 #' for specifics.
+#' @param obsWeights Optional numeric vector of observation weights. Currently
+#' unused.
+#' @param id Cluster identification variable. Currently unused.
 #' @param filter A string corresponding to a feature ranking or selecting function
 #' implemented in the FSelector package. One of: \code{\link[FSelector]{cfs}},
 #' \code{\link[FSelector]{chi.squared}}, \code{\link[FSelector]{consistency}},
@@ -42,7 +45,8 @@
 #' @param ... Currently unused.
 #' @return A logical vector with length equal to \code{ncol(X)}.
 #' @import FSelector
-screen.FSelector <- function(Y, X, family,
+#' @importFrom methods is
+screen.FSelector <- function(Y, X, family, obsWeights, id,
 							 filter = c("cfs", "chi.squared", "consistency", "gain.ratio", "information.gain",
 							 			"linear.correlation", "oneR", "random.forest.importance",
 							 			"rank.correlation", "relief", "symmetrical.uncertainty"),
@@ -57,9 +61,12 @@ screen.FSelector <- function(Y, X, family,
 
     filter <- match.arg(filter)
     selector <- match.arg(selector)
+    if(!is(family, "family")) {
+    	stop("screen.FSelector(): please supply a 'family' of gaussian() or binomial().")
+    }
 
     df <- NULL
-    if (family$family == "gaussian"& !(filter %in% c("chi.squared", "consistency", "oneR",
+    if (family$family == "gaussian" & !(filter %in% c("chi.squared", "consistency", "oneR",
     												 "gain.ratio", "information.gain",
     												 "symmetrical.uncertainty"))) {
         df <- data.frame(X, Y = Y)
@@ -69,21 +76,24 @@ screen.FSelector <- function(Y, X, family,
     	stop("screen.FSelector(): family '", family$family,
     		 "' not supported in combination with filter '", filter, "'.")
     }
+    y_name <- colnames(df)[ncol(df)]
 
 	filter_f <- match.fun(filter)
-	filter_res <- do.call(filter_f, c(list(formula = Y~., data = df), filter_params))
+	filter_res <- do.call(filter_f,
+						  c(list(formula = as.simple.formula(".", y_name), data = df),
+						  	filter_params))
 	if(verbose) {
 		print(filter_res)
 	}
 
-	subset <- filter_res
+	subset <- colnames(df)[-ncol(df)]
 	if(selector != "all") {
 		selector_f <- match.fun(selector)
 		# c(list()) trick so k disappears if NULL
 		subset <- do.call(selector_f, c(list(attrs = filter_res), k = k))
 	}
 	if(verbose) {
-		f <- as.simple.formula(subset, "Y")
+		f <- as.simple.formula(subset, y_name)
 		print(f)
 	}
 
@@ -393,7 +403,7 @@ screen.FSelector.oneR <- function(Y, X, family,
 #' \code{\link[randomForest]{randomForest}} (with \code{ntree = 1000}) to
 #' estimate the specified type of importance for each column of \code{X}.
 #'
-#' @param importance.type Integer: \code{1}, indicating mean decrease in
+#' @param type Importance type. Integer: \code{1}, indicating mean decrease in
 #' accuracy (for \code{binomial()} family) or percent increase in mean squared
 #' error (for \code{gaussian()} family) when comparing predictions using
 #' the original variable versus a permuted version of the variable (column of
@@ -414,7 +424,7 @@ screen.FSelector.oneR <- function(Y, X, family,
 #' data(mtcars)
 #' Y <- mtcars$mpg
 #' X <- mtcars[,-which(colnames(mtcars)=="mpg")]
-#' screen.FSelector.random.forest.importance(Y, X, gaussian(), importance.type = 2)
+#' screen.FSelector.random.forest.importance(Y, X, gaussian(), type = 2)
 #'
 #' # based on examples in SuperLearner package
 #' set.seed(1)
@@ -431,7 +441,7 @@ screen.FSelector.oneR <- function(Y, X, family,
 #' sl
 #' sl$whichScreen
 screen.FSelector.random.forest.importance <- function(Y, X, family,
-													  importance.type = formals(random.forest.importance)$importance.type,
+													  type = formals(random.forest.importance)$importance.type,
 													  selector = c("cutoff.biggest.diff", "cutoff.k", "cutoff.k.percent"),
 													  k = switch(selector,
 													  			 cutoff.k = ceiling(0.5*ncol(X)),
@@ -442,7 +452,7 @@ screen.FSelector.random.forest.importance <- function(Y, X, family,
     selector <- match.arg(selector)
 	screen.FSelector(Y, X, family,
 					 filter = "random.forest.importance",
-					 filter_params = list(importance.type = importance.type),
+					 filter_params = list(importance.type = type),
 					 selector = selector, k = k,
 					 verbose = verbose, ...)
 }
