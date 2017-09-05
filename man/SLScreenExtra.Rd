@@ -40,6 +40,9 @@ weights (\code{obsWeights}) in their calculations.
  	\item{\code{\link{screen.wgtd.lasso}}}
 		\item{\code{\link{screen.wgtd.elasticnet}}}
 	 }}
+  \item{Multivariate adaptive regression splines:}{\itemize{
+ 	\item{\code{\link{screen.earth}}}
+	 }}
   \item{Random decision forests:}{\itemize{
  	\item{\code{\link{screen.randomForest.imp}}}
 		\item{\code{\link{screen.ranger}}}

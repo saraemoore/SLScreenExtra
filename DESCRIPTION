@@ -1,6 +1,6 @@
 Package: SLScreenExtra
 Title: A Collection of Additional Feature Selection ('screen.*()') Algorithms for SuperLearner
-Version: 0.3.0
+Version: 0.3.1
 Date: 2017-09-04
 Authors@R: person("Sara", "Moore", email = "sara@saraemoore.com",
                   role = c("aut", "cre"))
