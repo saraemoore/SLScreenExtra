@@ -60,3 +60,15 @@ weights (\code{obsWeights}) in their calculations.
 }
 }
 
+\section{Utility methods}{
+
+\itemize{
+  \item{Produce \code{\link[broom]{tidy}} output from a
+		\code{\link[SuperLearner]{SuperLearner}} or
+		\code{\link[SuperLearner]{CV.SuperLearner}} object:}{\itemize{
+	\item{\code{\link{tidy.SuperLearner}}}
+	\item{\code{\link{tidy.CV.SuperLearner}}}
+	}}
+}
+}
+
