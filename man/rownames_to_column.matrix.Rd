@@ -2,10 +2,20 @@
 % Please edit documentation in R/tidy.R
 \name{rownames_to_column.matrix}
 \alias{rownames_to_column.matrix}
-\title{rownames_to_column.matrix() was inspired by tibble::rownames_to_column()}
+\title{Move rownames to a column for a matrix, then convert to data.frame}
 \usage{
 rownames_to_column.matrix(mat, var = "rowname", stringsAsFactors = FALSE)
 }
+\arguments{
+\item{mat}{A matrix.}
+
+\item{var}{Name of new column to use for rownames. If the column exists, a
+period will be prepended until a unique column name is found.}
+
+\item{stringsAsFactors}{Logical. When casting to \code{\link{data.frame}},
+should character vectors be converted to factors?}
+}
 \description{
-rownames_to_column.matrix() was inspired by tibble::rownames_to_column()
+Inspired by \code{\link[tibble]{rownames_to_column}} but not a proper
+extension of it (yet).
 }

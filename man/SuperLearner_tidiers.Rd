@@ -28,8 +28,9 @@ A \code{data.frame} without rownames. Column names included depend
 on the supplied value for \code{algorithm}.
 }
 \description{
-This method tidies the details of a SuperLearner fit (screening, prediction,
-or both) into a summary.
+This method extends \code{\link[broom]{tidy}} to tidy the results from a
+\code{\link[SuperLearner]{SuperLearner}} fit (screening, prediction, or
+both) into a summary.
 }
 \details{
 This method can be used to summarize information related to the
@@ -97,6 +98,7 @@ sl = SuperLearner(Y, X, family = binomial(), cvControl = list(V = 2),
                                     c("SL.glm", "screen.wgtd.corP"),
                                     c("SL.glm", "screen.wgtd.ttest")))
 
+library(broom)
 tidy(sl)
 tidy(sl, algorithm = "screening")
 tidy(sl, algorithm = "both")

@@ -7,7 +7,16 @@ checkColName = function(var, df) {
 	}
 }
 
-#' rownames_to_column.matrix() was inspired by tibble::rownames_to_column()
+#' Move rownames to a column for a matrix, then convert to data.frame
+#'
+#' Inspired by \code{\link[tibble]{rownames_to_column}} but not a proper
+#' extension of it (yet).
+#'
+#' @param mat A matrix.
+#' @param var Name of new column to use for rownames. If the column exists, a
+#' period will be prepended until a unique column name is found.
+#' @param stringsAsFactors Logical. When casting to \code{\link{data.frame}},
+#' should character vectors be converted to factors?
 rownames_to_column.matrix = function(mat, var = "rowname", stringsAsFactors = FALSE) {
 	rn = rownames(mat)
 	rownames(mat) = NULL
@@ -17,13 +26,18 @@ rownames_to_column.matrix = function(mat, var = "rowname", stringsAsFactors = FA
 	var = checkColName(var, df)
 	df[,var] = rn
 
+	if(stringsAsFactors&is.character(df[,var])) {
+		df[,var] = factor(df[,var])
+	}
+
 	return(df)
 }
 
 #' Tidying method(s) for a SuperLearner fit object
 #'
-#' This method tidies the details of a SuperLearner fit (screening, prediction,
-#' or both) into a summary.
+#' This method extends \code{\link[broom]{tidy}} to tidy the results from a
+#' \code{\link[SuperLearner]{SuperLearner}} fit (screening, prediction, or
+#' both) into a summary.
 #'
 #' @name SuperLearner_tidiers
 #' @rdname SuperLearner_tidiers
@@ -85,6 +99,7 @@ rownames_to_column.matrix = function(mat, var = "rowname", stringsAsFactors = FA
 #'     }
 #' }
 #' @seealso \code{\link{tidy.CV.SuperLearner}}
+#' @importFrom SuperLearner SuperLearner
 #' @importFrom broom tidy
 #' @export
 #' @examples
@@ -103,6 +118,7 @@ rownames_to_column.matrix = function(mat, var = "rowname", stringsAsFactors = FA
 #'                                     c("SL.glm", "screen.wgtd.corP"),
 #'                                     c("SL.glm", "screen.wgtd.ttest")))
 #'
+#' library(broom)
 #' tidy(sl)
 #' tidy(sl, algorithm = "screening")
 #' tidy(sl, algorithm = "both")
@@ -122,8 +138,9 @@ tidy.SuperLearner = function(x, algorithm = c("prediction", "screening", "both")
 
 #' Tidying method(s) for a CV.SuperLearner fit object
 #'
-#' This method tidies the details of a CV.SuperLearner fit (screening,
-#' prediction, or both) into a summary.
+#' This method extends \code{\link[broom]{tidy}} to tidy the results from a
+#' \code{\link[SuperLearner]{CV.SuperLearner}} fit (screening, prediction, or
+#' both) into a summary.
 #'
 #' @name CV.SuperLearner_tidiers
 #' @rdname CV.SuperLearner_tidiers
@@ -140,6 +157,8 @@ tidy.SuperLearner = function(x, algorithm = c("prediction", "screening", "both")
 #' \code{data.frame} from \code{tidy.CV.SuperLearner} will contain one
 #' additional column, however: "fold," indicating the (outer) SuperLearner
 #' cross-validation fold number.
+#' @seealso \code{\link{tidy.SuperLearner}}
+#' @importFrom SuperLearner CV.SuperLearner
 #' @importFrom broom tidy
 #' @importFrom dplyr bind_rows mutate %>%
 #' @export
@@ -161,6 +180,7 @@ tidy.SuperLearner = function(x, algorithm = c("prediction", "screening", "both")
 #'                        cvControl = list(V = 2),
 #'                        innerCvControl = list(list(V = 2)))
 #'
+#' library(broom)
 #' tidy(cvsl)
 #' tidy(cvsl, algorithm = "screening")
 #' tidy(cvsl, algorithm = "both")
@@ -176,6 +196,7 @@ tidyModels <- function (x, ...) {
 }
 
 #' @importFrom dplyr mutate
+#' @importFrom SuperLearner SuperLearner
 tidyModels.SuperLearner <- function (x, stringsAsFactors = FALSE, ...) {
 
 	res = data.frame(estimate = x$coef,
@@ -196,6 +217,7 @@ tidyModels.SuperLearner <- function (x, stringsAsFactors = FALSE, ...) {
 }
 
 #' @importFrom dplyr bind_rows mutate %>%
+#' @importFrom SuperLearner CV.SuperLearner
 tidyModels.CV.SuperLearner <- function (x, ...) {
 	resByFold = sapply(x$AllSL, tidyModels, ..., simplify = FALSE)
 	bind_rows(resByFold, .id = "fold") %>%
@@ -208,6 +230,7 @@ tidyFeatures <- function (x, ...) {
 
 #' @importFrom tidyr gather
 #' @importFrom dplyr full_join filter
+#' @importFrom SuperLearner SuperLearner
 tidyFeatures.SuperLearner = function(x, includePred = FALSE, includeAll = FALSE, stringsAsFactors = FALSE, ...) {
 
 	res = x$whichScreen
@@ -235,6 +258,7 @@ tidyFeatures.SuperLearner = function(x, includePred = FALSE, includeAll = FALSE,
 }
 
 #' @importFrom dplyr bind_rows mutate %>%
+#' @importFrom SuperLearner CV.SuperLearner
 tidyFeatures.CV.SuperLearner = function(x, ...) {
 
 	resByFold = sapply(x$AllSL, tidyFeatures, ..., simplify = FALSE)

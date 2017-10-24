@@ -25,8 +25,9 @@ additional column, however: "fold," indicating the (outer) SuperLearner
 cross-validation fold number.
 }
 \description{
-This method tidies the details of a CV.SuperLearner fit (screening,
-prediction, or both) into a summary.
+This method extends \code{\link[broom]{tidy}} to tidy the results from a
+\code{\link[SuperLearner]{CV.SuperLearner}} fit (screening, prediction, or
+both) into a summary.
 }
 \examples{
 # based on an example in the SuperLearner package
@@ -46,8 +47,12 @@ cvsl = CV.SuperLearner(Y, X, family = binomial(),
                        cvControl = list(V = 2),
                        innerCvControl = list(list(V = 2)))
 
+library(broom)
 tidy(cvsl)
 tidy(cvsl, algorithm = "screening")
 tidy(cvsl, algorithm = "both")
 
+}
+\seealso{
+\code{\link{tidy.SuperLearner}}
 }
