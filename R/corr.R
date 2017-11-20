@@ -49,6 +49,9 @@ screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson"
     if(!method%in%c("pearson", "spearman")) {
         stop("Correlation method ", method, " not supported by screen.wgtd.corRank")
     }
+    if(is.null(obsWeights)) {
+        obsWeights <- rep(1, length(x))
+    }
     listCor <- apply(X, 2, function(x, Y, method, obsWeights) {
     	# if x is homogenous, bump it to the bottom of the list
         ifelse(var(x) <= 0, 0, wCorr::weightedCorr(x, Y, method = method, weights = obsWeights))
