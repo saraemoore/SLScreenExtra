@@ -50,7 +50,7 @@ screen.wgtd.corRank <- function(Y, X, family, obsWeights, id, method = "pearson"
         stop("Correlation method ", method, " not supported by screen.wgtd.corRank")
     }
     if(is.null(obsWeights)) {
-        obsWeights <- rep(1, length(x))
+        obsWeights <- rep(1, length(Y))
     }
     listCor <- apply(X, 2, function(x, Y, method, obsWeights) {
     	# if x is homogenous, bump it to the bottom of the list
