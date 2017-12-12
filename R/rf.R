@@ -142,6 +142,7 @@ screen.randomForest.imp = function (Y, X, family, obsWeights, id,
 #' grown (Malley et al., 2012). Ignored if family is \code{gaussian()}, for
 #' which regression trees are always grown. See \code{\link[ranger]{ranger}}
 #' for more details.
+#' @param numThreads Number of threads. Default: 1.
 #' @importFrom ranger ranger
 #' @importFrom methods is
 #' @importFrom FSelector cutoff.biggest.diff cutoff.k cutoff.k.percent
@@ -186,6 +187,7 @@ screen.ranger <- function(Y, X, family,
                           importanceType = c("permutation", "impurity"),
                           scalePermutationImportance = TRUE,
                           probabilityTrees = FALSE,
+                          numThreads = 1,
                           verbose = FALSE,
                           ...) {
 
@@ -211,7 +213,7 @@ screen.ranger <- function(Y, X, family,
                      importance = importanceType, probability = probabilityTrees,
                      write.forest = FALSE, min.node.size = nodeSize,
                      scale.permutation.importance = scalePermutationImportance,
-                     num.threads = 1, verbose = verbose)
+                     num.threads = numThreads, verbose = verbose)
 
     filter_res = as.data.frame(rf_fit$variable.importance)
     # selector_f <- match.fun(selector)

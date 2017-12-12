@@ -11,7 +11,7 @@ screen.ranger(Y, X, family, selector = c("cutoff.biggest.diff", "cutoff.k",
   nodeSize = ifelse(family$family == "gaussian", 5, 1),
   importanceType = c("permutation", "impurity"),
   scalePermutationImportance = TRUE, probabilityTrees = FALSE,
-  verbose = FALSE, ...)
+  numThreads = 1, verbose = FALSE, ...)
 }
 \arguments{
 \item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}
@@ -68,6 +68,8 @@ grown. If family is \code{binomial()} and
 grown (Malley et al., 2012). Ignored if family is \code{gaussian()}, for
 which regression trees are always grown. See \code{\link[ranger]{ranger}}
 for more details.}
+
+\item{numThreads}{Number of threads. Default: 1.}
 
 \item{verbose}{Should debugging messages be printed? Default: \code{FALSE}.}
 
