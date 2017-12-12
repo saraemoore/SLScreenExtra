@@ -1,7 +1,7 @@
 Package: SLScreenExtra
 Title: A Collection of Additional Feature Selection Algorithms and Utilities for SuperLearner
-Version: 0.4.2
-Date: 2017-11-20
+Version: 0.4.3
+Date: 2017-12-11
 Authors@R: person("Sara", "Moore", email = "sara@saraemoore.com",
                   role = c("aut", "cre"))
 Description: This package contains several variable selection algorithm
