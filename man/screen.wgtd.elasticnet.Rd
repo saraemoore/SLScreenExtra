@@ -5,8 +5,18 @@
 \alias{screen.wgtd.lasso}
 \title{Weighted regularized regression screening algorithm}
 \usage{
-screen.wgtd.elasticnet(Y, X, family, obsWeights, id, alpha = 0.5, k = 2,
-  nfolds = 10, nlambda = 100, ...)
+screen.wgtd.elasticnet(
+  Y,
+  X,
+  family,
+  obsWeights,
+  id,
+  alpha = 0.5,
+  k = 2,
+  nfolds = 10,
+  nlambda = 100,
+  ...
+)
 
 screen.wgtd.lasso(..., alpha = 1)
 }

@@ -5,8 +5,12 @@
 \alias{tidy.SuperLearner}
 \title{Tidying method(s) for a SuperLearner fit object}
 \usage{
-\method{tidy}{SuperLearner}(x, algorithm = c("prediction", "screening",
-  "both"), stringsAsFactors = FALSE, ...)
+\method{tidy}{SuperLearner}(
+  x,
+  algorithm = c("prediction", "screening", "both"),
+  stringsAsFactors = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{object of class \code{\link[SuperLearner]{SuperLearner}}}

@@ -4,8 +4,16 @@
 \alias{screen.wgtd.corRank}
 \title{Weighted correlation screening algorithm}
 \usage{
-screen.wgtd.corRank(Y, X, family, obsWeights, id, method = "pearson", k = 2,
-  ...)
+screen.wgtd.corRank(
+  Y,
+  X,
+  family,
+  obsWeights,
+  id,
+  method = "pearson",
+  k = 2,
+  ...
+)
 }
 \arguments{
 \item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}

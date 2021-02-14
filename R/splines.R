@@ -105,3 +105,41 @@ screen.earth <- function (Y, X, family, obsWeights, id,
     return(colnames(X) %in% subset)
 
 }
+
+#' Non-linear regression screening algorithm
+#'
+#' Performs feature selection via "Multivariate Adaptive Regression Splines"/
+#' "Fast MARS" using \code{\link[earth]{earth}}'s implementation.
+#' @param ... Arguments passed on to \code{\link{screen.earth}}.
+#' @param pMethod Pruning method. Default: \code{"backward"}.
+#' @param nFold Number of cross-validation folds. Default: 0 (cross-validation
+#' disabled).
+#' @export
+#' @examples
+#' data(iris)
+#' Y <- as.numeric(iris$Species=="setosa")
+#' X <- iris[,-which(colnames(iris)=="Species")]
+#' screen.earth.backwardprune(Y, X, binomial())
+#'
+#' data(mtcars)
+#' Y <- mtcars$mpg
+#' X <- mtcars[,-which(colnames(mtcars)=="mpg")]
+#' screen.earth.backwardprune(Y, X, gaussian())
+#'
+#' # based on examples in SuperLearner package
+#' set.seed(1)
+#' n <- 250
+#' p <- 20
+#' X <- matrix(rnorm(n*p), nrow = n, ncol = p)
+#' X <- data.frame(X)
+#' Y <- X[, 1] + sqrt(abs(X[, 2] * X[, 3])) + X[, 2] - X[, 3] + rnorm(n)
+#'
+#' library(SuperLearner)
+#' sl = SuperLearner(Y, X, family = gaussian(), cvControl = list(V = 2),
+#'                   SL.library = list(c("SL.glm", "All"),
+#'                                     c("SL.glm", "screen.earth.backwardprune")))
+#' sl
+#' sl$whichScreen
+screen.earth.backwardprune = function(..., pMethod = "backward", nFold = 0){
+    screen.earth(..., pMethod = pMethod, nFold = nFold)
+}

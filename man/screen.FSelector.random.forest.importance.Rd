@@ -4,11 +4,16 @@
 \alias{screen.FSelector.random.forest.importance}
 \title{Random Forest screening algorithm}
 \usage{
-screen.FSelector.random.forest.importance(Y, X, family,
+screen.FSelector.random.forest.importance(
+  Y,
+  X,
+  family,
   type = formals(random.forest.importance)$importance.type,
   selector = c("cutoff.biggest.diff", "cutoff.k", "cutoff.k.percent"),
-  k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)), cutoff.k.percent =
-  0.5, NULL), verbose = FALSE, ...)
+  k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)), cutoff.k.percent = 0.5, NULL),
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}

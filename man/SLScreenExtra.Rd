@@ -3,7 +3,6 @@
 \docType{package}
 \name{SLScreenExtra}
 \alias{SLScreenExtra}
-\alias{SLScreenExtra-package}
 \title{SLScreenExtra: A collection of screening algorithms for SuperLearner}
 \description{
 The SLScreenExtra package provides feature selection or \code{screen.*()}

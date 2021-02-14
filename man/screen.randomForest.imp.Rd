@@ -4,14 +4,23 @@
 \alias{screen.randomForest.imp}
 \title{"Best of both worlds" Random Forest screening algorithm}
 \usage{
-screen.randomForest.imp(Y, X, family, obsWeights, id,
+screen.randomForest.imp(
+  Y,
+  X,
+  family,
+  obsWeights,
+  id,
   selector = c("cutoff.biggest.diff", "cutoff.k", "cutoff.k.percent"),
-  k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)), cutoff.k.percent =
-  0.5, NULL), nTree = 1000, mTry = ifelse(family$family == "gaussian",
-  floor(sqrt(ncol(X))), max(floor(ncol(X)/3), 1)),
+  k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)), cutoff.k.percent = 0.5, NULL),
+  nTree = 1000,
+  mTry = ifelse(family$family == "gaussian", floor(sqrt(ncol(X))),
+    max(floor(ncol(X)/3), 1)),
   nodeSize = ifelse(family$family == "gaussian", 5, 1),
-  importanceType = c("permutation", "impurity"), maxNodes = NULL,
-  verbose = FALSE, ...)
+  importanceType = c("permutation", "impurity"),
+  maxNodes = NULL,
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}

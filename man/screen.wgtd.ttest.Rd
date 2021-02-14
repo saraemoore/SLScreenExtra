@@ -4,9 +4,17 @@
 \alias{screen.wgtd.ttest}
 \title{Weighted t-test screening algorithm}
 \usage{
-screen.wgtd.ttest(Y, X, family, obsWeights, id, selector = c("cutoff.k",
-  "cutoff.k.percent"), k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)),
-  cutoff.k.percent = 0.5, NULL), minP = NULL, ...)
+screen.wgtd.ttest(
+  Y,
+  X,
+  family,
+  obsWeights,
+  id,
+  selector = c("cutoff.k", "cutoff.k.percent"),
+  k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)), cutoff.k.percent = 0.5, NULL),
+  minP = NULL,
+  ...
+)
 }
 \arguments{
 \item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}

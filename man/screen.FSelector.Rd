@@ -4,13 +4,21 @@
 \alias{screen.FSelector}
 \title{Screening algorithms implemented in the FSelector package}
 \usage{
-screen.FSelector(Y, X, family, obsWeights, id, filter = c("cfs",
-  "chi.squared", "consistency", "gain.ratio", "information.gain",
-  "linear.correlation", "oneR", "random.forest.importance", "rank.correlation",
-  "relief", "symmetrical.uncertainty"), filter_params = NULL,
+screen.FSelector(
+  Y,
+  X,
+  family,
+  obsWeights,
+  id,
+  filter = c("cfs", "chi.squared", "consistency", "gain.ratio", "information.gain",
+    "linear.correlation", "oneR", "random.forest.importance", "rank.correlation",
+    "relief", "symmetrical.uncertainty"),
+  filter_params = NULL,
   selector = c("cutoff.biggest.diff", "cutoff.k", "cutoff.k.percent", "all"),
-  k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)), cutoff.k.percent =
-  0.5, NULL), verbose = FALSE, ...)
+  k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)), cutoff.k.percent = 0.5, NULL),
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}

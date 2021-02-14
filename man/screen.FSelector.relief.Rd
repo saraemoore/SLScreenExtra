@@ -4,12 +4,17 @@
 \alias{screen.FSelector.relief}
 \title{RReliefF screening algorithm}
 \usage{
-screen.FSelector.relief(Y, X, family,
+screen.FSelector.relief(
+  Y,
+  X,
+  family,
   neighbours.count = formals(relief)$neighbours.count,
   sample.size = formals(relief)$sample.size,
   selector = c("cutoff.biggest.diff", "cutoff.k", "cutoff.k.percent"),
-  k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)), cutoff.k.percent =
-  0.5, NULL), verbose = FALSE, ...)
+  k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)), cutoff.k.percent = 0.5, NULL),
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}

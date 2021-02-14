@@ -4,9 +4,15 @@
 \alias{screen.FSelector.oneR}
 \title{OneR screening algorithm}
 \usage{
-screen.FSelector.oneR(Y, X, family, selector = c("cutoff.biggest.diff",
-  "cutoff.k", "cutoff.k.percent"), k = switch(selector, cutoff.k = ceiling(0.5
-  * ncol(X)), cutoff.k.percent = 0.5, NULL), verbose = FALSE, ...)
+screen.FSelector.oneR(
+  Y,
+  X,
+  family,
+  selector = c("cutoff.biggest.diff", "cutoff.k", "cutoff.k.percent"),
+  k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)), cutoff.k.percent = 0.5, NULL),
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}

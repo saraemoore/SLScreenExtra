@@ -4,14 +4,23 @@
 \alias{screen.ranger}
 \title{Screen features via a fast implementation of Random Forest}
 \usage{
-screen.ranger(Y, X, family, selector = c("cutoff.biggest.diff", "cutoff.k",
-  "cutoff.k.percent"), k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)),
-  cutoff.k.percent = 0.5, NULL), nTree = 1000, mTry = ifelse(family$family
-  == "gaussian", floor(sqrt(ncol(X))), max(floor(ncol(X)/3), 1)),
+screen.ranger(
+  Y,
+  X,
+  family,
+  selector = c("cutoff.biggest.diff", "cutoff.k", "cutoff.k.percent"),
+  k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)), cutoff.k.percent = 0.5, NULL),
+  nTree = 1000,
+  mTry = ifelse(family$family == "gaussian", floor(sqrt(ncol(X))),
+    max(floor(ncol(X)/3), 1)),
   nodeSize = ifelse(family$family == "gaussian", 5, 1),
   importanceType = c("permutation", "impurity"),
-  scalePermutationImportance = TRUE, probabilityTrees = FALSE,
-  numThreads = 1, verbose = FALSE, ...)
+  scalePermutationImportance = TRUE,
+  probabilityTrees = FALSE,
+  numThreads = 1,
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}

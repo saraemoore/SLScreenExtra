@@ -4,11 +4,17 @@
 \alias{screen.FSelector.entropy}
 \title{Entropy-based screening algorithms}
 \usage{
-screen.FSelector.entropy(Y, X, family, filter = c("symmetrical.uncertainty",
-  "gain.ratio", "information.gain"), unit = formals(information.gain)$unit,
+screen.FSelector.entropy(
+  Y,
+  X,
+  family,
+  filter = c("symmetrical.uncertainty", "gain.ratio", "information.gain"),
+  unit = formals(information.gain)$unit,
   selector = c("cutoff.biggest.diff", "cutoff.k", "cutoff.k.percent"),
-  k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)), cutoff.k.percent =
-  0.5, NULL), verbose = FALSE, ...)
+  k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)), cutoff.k.percent = 0.5, NULL),
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}

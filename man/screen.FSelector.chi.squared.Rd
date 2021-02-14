@@ -4,9 +4,15 @@
 \alias{screen.FSelector.chi.squared}
 \title{Chi-squared test screening algorithm}
 \usage{
-screen.FSelector.chi.squared(Y, X, family, selector = c("cutoff.biggest.diff",
-  "cutoff.k", "cutoff.k.percent"), k = switch(selector, cutoff.k = ceiling(0.5
-  * ncol(X)), cutoff.k.percent = 0.5, NULL), verbose = FALSE, ...)
+screen.FSelector.chi.squared(
+  Y,
+  X,
+  family,
+  selector = c("cutoff.biggest.diff", "cutoff.k", "cutoff.k.percent"),
+  k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)), cutoff.k.percent = 0.5, NULL),
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}

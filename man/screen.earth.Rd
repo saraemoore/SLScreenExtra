@@ -4,11 +4,22 @@
 \alias{screen.earth}
 \title{Non-linear regression screening algorithm}
 \usage{
-screen.earth(Y, X, family, obsWeights, id, selector = c("cutoff.biggest.diff",
-  "cutoff.k", "cutoff.k.percent"), k = switch(selector, cutoff.k = ceiling(0.5
-  * ncol(X)), cutoff.k.percent = 0.5, NULL), importanceType = c("nsubsets",
-  "rss", "gcv"), degree = 2, penalty = 3, kForward = max(21, 2 * ncol(X) +
-  1), pMethod = "cv", nFold = 5, ...)
+screen.earth(
+  Y,
+  X,
+  family,
+  obsWeights,
+  id,
+  selector = c("cutoff.biggest.diff", "cutoff.k", "cutoff.k.percent"),
+  k = switch(selector, cutoff.k = ceiling(0.5 * ncol(X)), cutoff.k.percent = 0.5, NULL),
+  importanceType = c("nsubsets", "rss", "gcv"),
+  degree = 2,
+  penalty = 3,
+  kForward = max(21, 2 * ncol(X) + 1),
+  pMethod = "cv",
+  nFold = 5,
+  ...
+)
 }
 \arguments{
 \item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}

@@ -4,8 +4,17 @@
 \alias{screen.wgtd.corP}
 \title{Weighted correlation screening algorithm}
 \usage{
-screen.wgtd.corP(Y, X, family, obsWeights, id, method = "pearson",
-  minPvalue = 0.1, k = 2, ...)
+screen.wgtd.corP(
+  Y,
+  X,
+  family,
+  obsWeights,
+  id,
+  method = "pearson",
+  minPvalue = 0.1,
+  k = 2,
+  ...
+)
 }
 \arguments{
 \item{Y}{Outcome (numeric vector). See \code{\link[SuperLearner]{SuperLearner}}
