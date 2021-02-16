@@ -94,7 +94,7 @@ screen.earth <- function (Y, X, family, obsWeights, id,
     # match.fun has scoping problems
     selector_f <- get(selector)
     # c(list()) trick so k disappears if NULL
-    subset <- do.call(selector_f, c(list(attrs = filter_res), k = k))
+    subset <- do.call(selector_f, c(list(attrs = as.data.frame(filter_res)), k = k))
     # filter_res <- earth_imp[rev(order(filter_res)), "col"]
 
     # whichVariable <- rep(FALSE, ncol(X))
