@@ -1,0 +1,11 @@
+citHeader("To cite SLScreenExtra in publications use:")
+
+bibentry(
+  key      = "SLScreenExtra",
+  bibtype  = "Manual",
+  title    = "A Collection of Additional Feature Selection Algorithms and Utilities for SuperLearner",
+  author   = c(person("Sara", "Moore")),
+  note     = "R package version 0.4.6",
+  year     = "2023",
+  url      = "https://github.com/saraemoore/SLScreenExtra"
+)
